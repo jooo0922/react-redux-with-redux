@@ -1,29 +1,12 @@
 import React, { Component } from "react";
-import store from "../store"; // 여 store에서 바로 변경된 state값을 가져와서 사용하려는 것!
+// store 가져왔던 것도 전부 container component에서만 사용할테니 필요 없어짐.
 
 export default class DisplayNumber extends Component {
-  // 아예 DisplayNumber 컴포넌트에서 자체적인 state를 하나 파서 운영할거임.
-  state = {
-    number: store.getState().number, // 그래서 state의 초기값도 그냥 store에서 바로 가져와서 사용함.
-  };
-
-  // store의 state값이 변경되었다는 걸 통보받기 위해 constructor를 사용함.
-  constructor(props) {
-    super(props); // constructor는 이거를 무조건 실행시켜주게 되어있음! 리액트가 정한 약속!
-
-    // store의 state값이 변경될 때마다 호출할 함수를 등록한 것. -> 이 등록된 함수에서 DisplayNumber의 state값을 바꿔주면 되겠지?
-    store.subscribe(
-      function () {
-        this.setState({ number: store.getState().number }); // DisplayNumber의 state가 짧으니 새로운 객체를 만들어서 state를 변경해줬음.
-      }.bind(this)
-    ); // 여기서 바인딩해준 this는 DisplayNumber 컴포넌트를 바인딩 한거지?
-  }
-
   render() {
     return (
       <div>
         <h1>Display Number</h1>
-        <input type="text" value={this.state.number} readOnly />
+        <input type="text" value={this.props.number} readOnly />
       </div>
     );
   }

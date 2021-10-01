@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import store from "../store"; // store.js 파일에서 export한 store 객체를 가져온 것.
-// 왜? 입력값으로 인해 AddNumber의 state에 변화가 생길 때마다
-// Redux store로 변화된 state값을 바로 쏴줘서 그 안의 state를 변경시키려고!
+// 이전에 import 해놨던 store도 더 이상 필요없으니 없애버림
 
 export default class AddNumber extends Component {
   state = { size: 1 };
+
   render() {
     return (
       <div>
@@ -13,7 +12,10 @@ export default class AddNumber extends Component {
           type="button"
           value="+"
           onClick={function () {
-            store.dispatch({ type: "INCREMENT", size: this.state.size }); // 변경된 this.state.size 값을 action 객체에 담아서 store의 reducer 함수로 쏴줌
+            // 이전에 store와 관련된 작업을 AddNumber를 wrapping 하고 있는 익명 컴포넌트로 옮겨줬음!
+            // 그리고 이거를 맨 처음 Redux를 적용하기 전에 사용했던 원래의 코드로 다시 돌려놓음.
+            // 왜냐면 상위의 익명 컴포넌트에서 store 관련 작업들을 AddNumber의 props에 할당해놨기 때문!
+            this.props.onClick(this.state.size);
           }.bind(this)}
         />
         <input
@@ -68,4 +70,10 @@ export default class AddNumber extends Component {
  * 그래서 그 컴포넌트는 redux의 store를 핸들링하는 컴포넌트로 만들고,
  * AddNumber 라는 컴포넌트는 redux라는 것이 이 세상에 있다는 걸 모르는 컴포넌트로 만드는 거임!
  * -> presentational component 라고 함!
+ *
+ * 주!)
+ * 근데 만약에 Redux에 종속된 컴포넌트를 굳이 다른 사용자가 재사용할 일이 없을 것 같다?
+ * 그럼 그냥 Redux에 종속된 채로 사용해도 괜찮음.
+ *
+ * 종속된 거 자체가 나쁜거는 아님. 상황에 따라 균형감각을 가지고 처리해주면 된다.
  */

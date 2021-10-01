@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DisplayNumber from "../components/DisplayNumber";
+import DisplayNumber from "../containers/DisplayNumber"; // container component로 바꿔치기해서 가짜 DisplayNumber를 사용하려는 것!
 
 export default class DisplayNumberRoot extends Component {
   render() {
