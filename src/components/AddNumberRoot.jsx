@@ -6,12 +6,12 @@ export default class AddNumberRoot extends Component {
     return (
       <div>
         <h1>Add Number Root</h1>
-        <AddNumber
-          onClick={function (size) {
-            this.props.onClick(size);
-          }.bind(this)}
-        ></AddNumber>
+        <AddNumber></AddNumber>
       </div>
     );
   }
 }
+
+/**
+ * 하위 컴포넌트들과 데이터를 주고받기 위해서 사용해줬던 props들이 더 이상 필요없어짐.
+ */
