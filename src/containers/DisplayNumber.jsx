@@ -17,7 +17,12 @@ export default class extends Component {
     );
   }
   render() {
-    return <DisplayNumber number={this.state.number}></DisplayNumber>;
+    return (
+      <DisplayNumber
+        number={this.state.number}
+        unit={this.props.unit}
+      ></DisplayNumber>
+    );
   }
 }
 
@@ -31,4 +36,16 @@ export default class extends Component {
  * 그리고 state가 변경될 때마다 store로부터 가져와야하는 값인
  * this.state.number만 DisplayNumber의 props로 넘겨주면
  * DisplayNumber 안에서 redux 관련 코드 사용 없이 props만 이용해서 render 를 재호출해서 UI를 다시 그려줄 수 있게 됨.
+ */
+
+/**
+ * 그런데 이렇게 Redux를 container component로 빼주면,
+ * 재사용성은 늘어날 수 있지만, 코드가 너무 많아지지 않나?
+ *
+ * 만약 unit이라는 props 하나만 DisplayNumberRoot를 통해서 추가하려고 해도,
+ * 이전에는 그냥 바로 DisplayNumber로 꽂아주면 되는 것을
+ * container component를 거쳐서 전달해줘야 하는 불편함이 생기게 됨.
+ *
+ * 이러한 문제점들을 해결해주는 것이 react-redux 라는 도구임!
+ * 이 수업에서 본격적으로 배우고자 하는 것!
  */
