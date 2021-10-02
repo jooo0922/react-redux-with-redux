@@ -1,5 +1,44 @@
-import React, { Component } from "react";
 import AddNumber from "../components/AddNumber"; // 우리가 wrapping 할 컴포넌트를 불러와야 함.
+import { connect } from "react-redux";
+
+function mapDispatchToProps(dispatch) {
+  // 이 때, WrappedComponent에서의
+  // dispatch 작업을 해주는 이벤트핸들러 함수를 할당받는 이벤트 props의 이름을
+  // 리턴해주는 객체의 key로 써줘야 함.
+  // 그 value는 이벤트핸들러 함수를 줘야 함.
+  // 이 때, Provider에서 글로벌하게 공급받은 store를 사용해서 dispatch 메서드를 호출하지 말고,
+  // mapDispatchToProps(dispatch) 함수가 인자로 전달받는 dispatch를 사용하도록 약속되어 있음!
+  return {
+    onClick: function (size) {
+      dispatch({ type: "INCREMENT", size: size });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(AddNumber);
+
+/**
+ * 이 connect() 함수가 리턴해주는 함수에 AddNumber를 전달하면
+ * 알아서 가짜 컴포넌트(container component) 생성해주고,
+ * 부모 컴포넌트로부터 받아와야 할 props도 알아서 presentational component에 전달해 줌.
+ *
+ * 또한 DisplayNumber의 container component 에서와는 다르게
+ * connect() 함수에 전달해주는 두 개의 함수 인자 중에서
+ * mapStateToProps()는 필요없음.
+ * 왜냐면 주석처리된 코드에서 Redux store의 state값을 가져오지 않으니
+ * 그런 작업을 해줄 필요가 없지 -> 이럴 경우 첫 번째 인자는 그냥 null로 넣어주면 됨.
+ *
+ * 대신 이벤트 props(onClick) 에서 store.dispatch() 로
+ * 액션 객체를 store에 보내주는 작업을 하고 있으니
+ * mapDispatchToProps() 함수를 정의해서 두 번째 인자로 넣어줘야겠지
+ * 얘는 Redux의 Dispatch 메서드를 React의 이벤트 Props 로 연결시켜서
+ * 그 안에서 사용할 수 있도록 해주는 함수임.
+ */
+
+/*
+react-redux 라이브러리 사용 시 필요없는 코드이므로 주석 처리함.
+
+import React, { Component } from "react";
 import store from "../store";
 
 export default class extends Component {
@@ -13,6 +52,7 @@ export default class extends Component {
     );
   } // wrapping 할 컴포넌트를 리턴해주고 있지?
 }
+*/
 
 /**
  * AddNumber 컴포넌트를 감쌀 container component를 만듦.
